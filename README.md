@@ -57,16 +57,27 @@ buildscript {
 apply plugin: 'com.analyticspot.javaLibrary'
 ```
 
-If you are developing the plugin and you want to test local changes you can
-add `mavenLocal()` to the repository list.
+If you are developing the plugin and you want to test local changes you can add `mavenLocal()` to the repository list.
 
-With the new plugin syntax you need to add the following to your **`settings.gradle`** (not your `build.gradle`):
+**Important**: currently you can only apply this plugin using the old plugin syntax. See the
+[New Plugin Syntax](#new-plugin-syntax) section for details on why and how this could be fixed.
+
+
+
+## <a name="new-plugin-syntax"></a> New Plugin Synatx Issues
+
+Since I'm publishing on jitpack without a [custom domain name](https://jitpack.io/docs/FAQ/) the [plugin marker 
+artifact](https://docs.gradle.org/4.0/userguide/plugins.html#sec:plugin_markers) won't match so this **does not 
+work**. However, we could later publish elsewhere or add a custom domain name and make this work. If so this is how 
+this **could** work with the new plugin syntax:
+
+First, add the repository containing the plugin to **`settings.gradle`** (not your `build.gradle`) like so:
 
 ```
 pluginManagement {
     repositories {
         maven {
-            url 'https://jitpack.io' }
+            url 'https://repo.with/plugin' }
         }
     }
 }
@@ -77,7 +88,7 @@ and then add the following to your `build.gradle`:
 
 ```
 plugins {
-    id 'com.analyticspot.javaLibrary' version '0.1'
+    id 'com.analyticspot.javaLibrary' version '0.2'
 }
 ```
 
