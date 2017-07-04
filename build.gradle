@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.analyticspot'
-version = '0.2'
+version = '0.2.1'
 
 repositories {
     jcenter()
@@ -19,7 +19,7 @@ dependencies {
 gradlePlugin {
     plugins {
         javaLibrary {
-            id = 'com.analyticspot.javaLibrary'
+            id = 'com.github.oliverdain.javaLibrary'
             implementationClass = 'com.analyticspot.JavaLibrary'
         }
     }

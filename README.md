@@ -50,7 +50,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.analyticspot:gradle-plugins:$PLUGIN_VERSION"
+        classpath "com.github.oliverdain:gradle-plugins:$PLUGIN_VERSION"
     }
 }
 
@@ -66,7 +66,7 @@ With the new plugin syntax you need to add the following to your **`settings.gra
 pluginManagement {
     repositories {
         maven {
-            url 'https://jitpack.io'
+            url 'https://jitpack.io' }
         }
     }
 }
