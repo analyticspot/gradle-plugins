@@ -15,6 +15,10 @@ We have a fairly standard Java setup except:
 Java style guide](https://google.github.io/styleguide/javaguide.html) but diverges from that guide in a few places.
 * We apply a custom [JavaDoc configuration](TODO: LINK HERE).
 
+## Testing
+
+We use testNG and add some custom hooks that report which tests failed at the end of the build if any fail.
+
 ## The Provided Configuration
 
 The `provided` configuration allows developers to add a dependency as "provided" meaning you need the dependency on
