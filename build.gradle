@@ -1,0 +1,34 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'groovy'
+}
+
+group = 'com.analyticspot'
+version = '0.1-SNAPSHOT'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile localGroovy()
+    compileOnly gradleApi()
+}
+
+gradlePlugin {
+    plugins {
+        javaLibrary {
+            id = 'com.analyticspot.javaLibrary'
+            implementationClass = 'com.analyticspot.JavaLibrary'
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
