@@ -1,6 +1,36 @@
 # Overview
 
-# Appying the Plugins
+This is the standard Analytic Spot plugin for building Java libraries. Aside from applying the Gradle java plugin, 
+this configures things in our standard way (e.g. uses our Lint files, runs tests with testNG, etc.). It also adds 
+some convenience properties like the "provided" configuration. The following subsections explain the configuration 
+this plugin applies.
+
+## Java Configuration
+
+We have a fairly standard Java setup except:
+
+* We use Java 8.
+* We configure things to use `mavenLocal()` and `jcenter()` as repositories.
+* We have our own [Checkstyle](http://checkstyle.sourceforge.net/) configuration. It is based mostly on the [Google 
+Java style guide](https://google.github.io/styleguide/javaguide.html) but diverges from that guide in a few places.
+* We apply a custom [JavaDoc configuration](TODO: LINK HERE).
+
+## The Provided Configuration
+
+The `provided` configuration allows developers to add a dependency as "provided" meaning you need the dependency on
+your IDE classpath and when you compile, but when generating jars and listing transitive dependencies the dependency
+should be ignored. Example use case would be a Spark job: the Spark libraries are used in the code and so are needed to
+compile, but they're huge and already on the cluster and in the classpath so we don't want to include them in the
+generated jar. To use just do something like:
+
+```
+dependencies {
+   provided 'org.apache.spark:spark-core_2.11:2.1.1'
+}
+```
+
+
+# Appying the Plugin
 
 With the old plugin syntax you need something like the following in your
 `build.gradle`:
