@@ -1,5 +1,7 @@
 # Overview
 
+![Release](https://jitpack.io/v/oliverdain/gradle-plugins.svg)
+
 This is the standard Analytic Spot plugin for building Java libraries. Aside from applying the Gradle java plugin, 
 this configures things in our standard way (e.g. uses our Lint files, runs tests with testNG, etc.). It also adds 
 some convenience properties like the "provided" configuration. The following subsections explain the configuration 
