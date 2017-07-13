@@ -1,10 +1,11 @@
 package com.analyticspot
 
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.quality.Checkstyle
 import org.gradle.api.tasks.testing.TestDescriptor
 import org.gradle.api.tasks.testing.TestResult
-
 /**
  * The standard Analytics Spot java library plugin. See the README.md for details.
  */
@@ -42,9 +43,53 @@ class JavaLibrary implements Plugin<Project> {
 
             // This tells IntelliJ that the stuff in provided is available.
             project.idea.module {
-                scopes.PROVIDED.plus += [ configurations.provided ]
+                scopes.PROVIDED.plus += [configurations.provided]
+            }
+        }
+
+        setupTesting(project)
+        setupCheckstyle(project)
+    }
+
+    void setupCheckstyle(Project project) {
+        project.with {
+            apply plugin: 'checkstyle'
+
+            def checkstyleFile = new File("$rootDir/build/checkstyle_config.xml")
+
+            def createConfig = task('createCheckstyleConfig').doLast {
+                def config = getClass().getResourceAsStream("/checkstyle_config.xml").text
+                checkstyleFile.text = config
             }
 
+            createConfig.outputs.upToDateWhen { checkstyleFile.exists() }
+
+
+
+            checkstyle {
+                configFile = checkstyleFile
+                toolVersion = 6.15
+                ignoreFailures = false
+            }
+
+            tasks.withType(Checkstyle).each { checkstyleTask ->
+                checkstyleTask.dependsOn createConfig
+                checkstyleTask.doLast {
+                    reports.all { report ->
+                        def outputFile = report.destination
+                        if (outputFile.exists() && outputFile.text.contains("<error ")) {
+                            throw new GradleException(
+                                    "There were checkstyle warnings! For more info check $outputFile")
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    void setupTesting(Project project) {
+        project.with {
             // Set up testing. In addition to testNG we show exceptions, logging output, etc.
             test {
                 useTestNG()
@@ -60,7 +105,7 @@ class JavaLibrary implements Plugin<Project> {
             def failedTests = []
             // Map from suite name to list of failing tests
             // def testFailures = new ArrayList<String  List<String>>()
-            project.test.afterTest { TestDescriptor tDesc, TestResult tResult ->
+            test.afterTest { TestDescriptor tDesc, TestResult tResult ->
                 assert tResult.testCount == 1
                 if (tResult.successfulTestCount > 0) {
                     ++testSuccess
@@ -69,7 +114,7 @@ class JavaLibrary implements Plugin<Project> {
                 }
             }
 
-            project.getGradle().buildFinished {
+            getGradle().buildFinished {
                 def totalTests = testSuccess + failedTests.size()
                 if (totalTests > 0) {
                     if (failedTests.size() > 0) {
