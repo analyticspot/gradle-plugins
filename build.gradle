@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.analyticspot'
-version = '0.3-SNAPSHOT'
+version = '0.3'
 
 repositories {
     jcenter()

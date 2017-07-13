@@ -11,9 +11,11 @@ We have a fairly standard Java setup except:
 
 * We use Java 8.
 * We configure things to use `mavenLocal()` and `jcenter()` as repositories.
-* We have our own [Checkstyle](http://checkstyle.sourceforge.net/) configuration. It is based mostly on the [Google 
-Java style guide](https://google.github.io/styleguide/javaguide.html) but diverges from that guide in a few places.
-* We apply a custom [JavaDoc configuration](TODO: LINK HERE).
+* We have our own [Checkstyle](http://checkstyle.sourceforge.net/)
+[configuration](./src/main/resources/checkstyle_config.xml). It is 
+based mostly on the 
+[Google Java style guide](https://google.github.io/styleguide/javaguide.html) but diverges from that guide in a few
+places.
 
 ## Testing
 
@@ -58,6 +60,8 @@ apply plugin: 'com.analyticspot.javaLibrary'
 ```
 
 If you are developing the plugin and you want to test local changes you can add `mavenLocal()` to the repository list.
+
+You can find the current version by looking at our [tags](tags).
 
 **Important**: currently you can only apply this plugin using the old plugin syntax. See the
 [New Plugin Syntax Issues](#new-plugin-syntax) section for details on why and how this could be fixed.
