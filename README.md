@@ -1,6 +1,6 @@
 # Overview
 
-![Release](https://jitpack.io/v/oliverdain/gradle-plugins.svg)
+![Release](https://jitpack.io/v/analyticspot/gradle-plugins.svg)
 
 This is the standard Analytic Spot plugin for building Java libraries. Aside from applying the Gradle java plugin, 
 this configures things in our standard way (e.g. uses our Lint files, runs tests with testNG, etc.). It also adds 
@@ -54,7 +54,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.github.oliverdain:gradle-plugins:$PLUGIN_VERSION"
+        classpath "com.github.analyticspot:gradle-plugins:$PLUGIN_VERSION"
     }
 }
 
@@ -63,7 +63,7 @@ apply plugin: 'com.analyticspot.javaLibrary'
 
 If you are developing the plugin and you want to test local changes you can add `mavenLocal()` to the repository list.
 
-You can find the current version by looking at our [tags](tags).
+You can find the current version by looking at our [tags](tags) or the jitpack badge at the top of this README.
 
 **Important**: currently you can only apply this plugin using the old plugin syntax. See the
 [New Plugin Syntax Issues](#new-plugin-syntax) section for details on why and how this could be fixed.
@@ -83,7 +83,7 @@ First, add the repository containing the plugin to **`settings.gradle`** (not yo
 pluginManagement {
     repositories {
         maven {
-            url 'https://repo.with/plugin' }
+            url 'https://repo.with/plugin'
         }
     }
 }
