@@ -2,6 +2,15 @@
 
 ![Release](https://jitpack.io/v/analyticspot/gradle-plugins.svg)
 
+This contains two plugins for building Java projects:
+
+* [`javaLibrary`](#javaLibrary): our standard Java 8 plugin.
+* [`javaCompat`](#javaCompat): for Java code that is compatible with JDK 7 (and Android)
+
+See the [Applying the Plugins](#applying) section to learn how to apply these plugins to your project.
+
+# The javaLibrary Plugin <a name="javaLibrary"></a>
+
 This is the standard Analytic Spot plugin for building Java libraries. Aside from applying the Gradle java plugin, 
 this configures things in our standard way (e.g. uses our Lint files, runs tests with testNG, etc.). It also adds 
 some convenience properties like the "provided" configuration. The following subsections explain the configuration 
@@ -37,8 +46,18 @@ dependencies {
 }
 ```
 
+# The javaCompat Plugin <a name="javaCompat"></a>
 
-# Appying the Plugin
+This inherits from `javaLibrary` but specifies that the source and target language level are Java 7. It also ensures
+that only Java 7 standard library functions are used. To ensure this users must either:
+
+* Have a `JDK7_HOME` environment variable set such that `$JDK7_HOME/jre/lib/rt.jar` points to the Java 7 standard
+  library.
+* Subclass the plugin and override the `getJdk7Path` method.
+
+
+
+# Appying the Plugins <a name="applying"></a>
 
 With the old plugin syntax you need something like the following in your
 `build.gradle`:
@@ -58,7 +77,11 @@ buildscript {
     }
 }
 
+// To apply the javaLibrary plugin
 apply plugin: 'com.analyticspot.javaLibrary'
+
+// To apply the javaCompat plugin
+apply plugin: 'com.analyticspot.javaCompat'
 ```
 
 If you are developing the plugin and you want to test local changes you can add `mavenLocal()` to the repository list.
