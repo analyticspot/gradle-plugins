@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.analyticspot'
-version = '0.2'
+version = '0.3'
 
 repositories {
     jcenter()
@@ -18,14 +18,19 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        javaLibrary {
-            id = 'com.analyticspot.javaLibrary'
+        anxJavaLibrary {
+            id = 'com.analyticspot.anxJavaLibrary'
             implementationClass = 'com.analyticspot.JavaLibrary'
         }
 
-        javaCompat {
-            id = 'com.analyticspot.javaCompat'
+        anxJavaCompat {
+            id = 'com.analyticspot.anxJavaCompat'
             implementationClass = 'com.analyticspot.JavaCompat'
+        }
+
+        anxKotlin {
+            id = 'com.analyticspot.anxKotlin'
+            implementationClass = 'com.analyticspot.Kotlin'
         }
     }
 }

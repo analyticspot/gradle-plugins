@@ -2,14 +2,15 @@
 
 ![Release](https://jitpack.io/v/analyticspot/gradle-plugins.svg)
 
-This contains two plugins for building Java projects:
+This contains three plugins for building Java projects:
 
-* [`javaLibrary`](#javaLibrary): our standard Java 8 plugin.
-* [`javaCompat`](#javaCompat): for Java code that is compatible with JDK 7 (and Android)
+* [`anxJavaLibrary`](#javaLibrary): our standard Java 8 plugin.
+* [`anxJavaCompat`](#javaCompat): for Java code that is compatible with JDK 7 (and Android)
+* [`anxKotlin`](#kotlin): for code that uses [Kotlin](https://kotlinlang.org)
 
 See the [Applying the Plugins](#applying) section to learn how to apply these plugins to your project.
 
-# The javaLibrary Plugin <a name="javaLibrary"></a>
+# The anxJavaLibrary Plugin <a name="javaLibrary"></a>
 
 This is the standard Analytic Spot plugin for building Java libraries. Aside from applying the Gradle java plugin, 
 this configures things in our standard way (e.g. uses our Lint files, runs tests with testNG, etc.). It also adds 
@@ -46,7 +47,7 @@ dependencies {
 }
 ```
 
-# The javaCompat Plugin <a name="javaCompat"></a>
+# The anxJavaCompat Plugin <a name="javaCompat"></a>
 
 This inherits from `javaLibrary` but specifies that the source and target language level are Java 7. It also ensures
 that only Java 7 standard library functions are used. To ensure this users must either:
@@ -55,7 +56,17 @@ that only Java 7 standard library functions are used. To ensure this users must 
   library.
 * Subclass the plugin and override the `getJdk7Path` method.
 
+# The anxKotlin Plugin <a name="kotlin"></a>
 
+If a project contains Kotlin code you should apply this plugin. This works fine in conjunction with other Java plugins
+so you can have code that is a mix of Java and Kotlin. In addition to the applying the standard Gradle Kotlin plugin
+this:
+
+* Disables caching as there is currently a known bug with the
+[Gradle build cache](https://docs.gradle.org/3.5/userguide/build_cache.html) and Kotlin.
+* Adds the Kotlin standard library as a project dependency.
+* Adds a `lint` task that uses [ktlint](https://github.com/shyiko/ktlint). This also sets up the `check` task so that it
+depends on the `lint` task.
 
 # Appying the Plugins <a name="applying"></a>
 
@@ -78,10 +89,13 @@ buildscript {
 }
 
 // To apply the javaLibrary plugin
-apply plugin: 'com.analyticspot.javaLibrary'
+apply plugin: 'com.analyticspot.anxJavaLibrary'
 
 // To apply the javaCompat plugin
-apply plugin: 'com.analyticspot.javaCompat'
+apply plugin: 'com.analyticspot.anxJavaCompat'
+
+// to apply the Kotlin plugin
+apply plugin: 'com.analyticspot.anxKotlin'
 ```
 
 If you are developing the plugin and you want to test local changes you can add `mavenLocal()` to the repository list.
@@ -90,7 +104,6 @@ You can find the current version by looking at our [tags](tags) or the jitpack b
 
 **Important**: currently you can only apply this plugin using the old plugin syntax. See the
 [New Plugin Syntax Issues](#new-plugin-syntax) section for details on why and how this could be fixed.
-
 
 
 ## <a name="new-plugin-syntax"></a> New Plugin Synatx Issues
@@ -117,7 +130,7 @@ and then add the following to your `build.gradle`:
 
 ```
 plugins {
-    id 'com.analyticspot.javaLibrary' version '0.2'
+    id 'com.analyticspot.anxJavaLibrary' version '0.2'
 }
 ```
 
