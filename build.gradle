@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.analyticspot'
-version = '0.1'
+version = '0.2'
 
 repositories {
     jcenter()
@@ -21,6 +21,11 @@ gradlePlugin {
         javaLibrary {
             id = 'com.analyticspot.javaLibrary'
             implementationClass = 'com.analyticspot.JavaLibrary'
+        }
+
+        javaCompat {
+            id = 'com.analyticspot.javaCompat'
+            implementationClass = 'com.analyticspot.JavaCompat'
         }
     }
 }
